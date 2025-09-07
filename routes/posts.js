@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const posts = require("../data/posts");
+const post = require("../data/posts");
 const error = require("../utilities/error");
+
 
 router
   .route("/")

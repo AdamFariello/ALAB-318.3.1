@@ -4,6 +4,8 @@ const router = express.Router();
 const users = require("../data/users");
 const error = require("../utilities/error");
 
+const posts = require("../data/posts"); //Contreversial inclusion 
+
 router
   .route("/")
   .get((req, res) => {
@@ -80,5 +82,24 @@ router
     if (user) res.json(user);
     else next();
   });
+
+
+router.route("/:id/posts")      
+      .get((req, res, next) => {
+        //TODO: figure out if next should be added here
+          //res.json({"test": "Successful"});
+          
+          const user = users.find((u) => u.id == req.params.id);
+          
+          if (user) {
+            const userId = user.id;
+            let userPosts = posts.filter((u) => userId == u.userId);
+
+            if (userPosts) res.json({ userPosts });
+            else next();
+          } else { 
+            next();
+          }
+      });
 
 module.exports = router;
