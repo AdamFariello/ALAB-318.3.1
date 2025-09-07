@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const comments = require("../data/comments")
+let comments = require("../data/comments") //NOTE: highlight that this is let but the other is const
 //const posts = require("../data/posts")
 const error = require("../utilities/error")
 
@@ -58,6 +58,17 @@ router.route("/:id")
 
         if (comment) res.json({comment});
         else next(error(409, "Insufficient data"));
+      })
+      .delete((req, res, next) => {
+        let deletedComment = comments.find((c) => {
+            if (c.id == req.params.id) {
+                comments = comments.filter(e => e != c);
+            }
+            return c;
+         })
+
+        if (deletedComment) res.json({"Deleted" : deletedComment});
+        else next(); //tODO: check error value
       })
 
 module.exports = router;
