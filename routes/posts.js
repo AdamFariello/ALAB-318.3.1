@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const posts = require("../data/posts");
+const comments = require("../data/comments");
 const error = require("../utilities/error");
 
 
@@ -89,5 +90,16 @@ router
     if (post) res.json(post);
     else next();
   });
+
+router.route("/:id/comments")
+      .get((req, res) => {
+        const postId = req.params.id;
+        let postsOfComment = comments.filter(c => {
+          if (c.postId == postId) return c;
+        })
+
+        if (postsOfComment != []) res.json({postsOfComment});
+        else next();
+      })
 
 module.exports = router;
