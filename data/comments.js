@@ -1,7 +1,3 @@
-const comments = [
-    {
-        "test": "dog"
-    }
-];
+const comments = [];
 
 module.exports = comments ;
