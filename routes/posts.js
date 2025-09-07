@@ -9,7 +9,7 @@ router
   .route("/")
   .get((req, res, next) => {
     //const userId = req.params.userId;
-    console.log(req.query.userId);
+    //console.log(req.query.userId);
     let userId = req.query.userId;
     if (userId) {
       let userPosts = null;

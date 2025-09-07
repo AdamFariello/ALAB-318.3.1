@@ -11,7 +11,7 @@
 //const comments = [];
 const comments = [
     {
-        "id":"0",
+        "id":0,
         "userId": 2,
         "postId": 0,
         "body": "free bird"

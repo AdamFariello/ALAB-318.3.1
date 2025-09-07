@@ -43,5 +43,21 @@ router.route("/:id")
         if (comment) res.json({comment});
         else next(error(404, "No comment with that id"))
       })
+      .patch((req, res, next) => {
+        const comment = comments.find((c, index) => {
+            //console.log(c);
+            if (c.id == req.params.id) {
+                //TODO: figure out if they just want to update the body or everything you can give
+                //TODO: DOUBLE CHECK IF NOT INCLUDING API KEY IN BODY BREAKS ANYTHING
+                for (key in req.body) {
+                    comments[index][key] = req.body[key]
+                }
+                return true;
+            }
+        })
+
+        if (comment) res.json({comment});
+        else next(error(409, "Insufficient data"));
+      })
 
 module.exports = router;
