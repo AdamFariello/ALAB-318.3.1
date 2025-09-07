@@ -29,7 +29,9 @@ router.route("/")
                 postId: req.body.postId,
                 body: req.body.body
             }
-            res.json({comment});
+
+            comments.push(comment);
+            res.json({comment}); 
         } else {
             next(error(400, "Insufficent Data"));
         }
