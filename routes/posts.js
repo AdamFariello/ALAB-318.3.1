@@ -1,22 +1,34 @@
 const express = require("express");
 const router = express.Router();
 
-const post = require("../data/posts");
+const posts = require("../data/posts");
 const error = require("../utilities/error");
 
 
 router
   .route("/")
-  .get((req, res) => {
-    const links = [
-      {
-        href: "posts/:id",
-        rel: ":id",
-        type: "GET",
-      },
-    ];
+  .get((req, res, next) => {
+    //const userId = req.params.userId;
+    console.log(req.query.userId);
+    let userId = req.query.userId;
+    if (userId) {
+      let userPosts = null;
+      userPosts = posts.filter((e) => userId == e.userId);
 
-    res.json({ posts, links });
+      if (userPosts.length != []) res.json({userPosts});
+      else next(error(404, "No user with that id"));
+    
+    } else {
+      const links = [
+        {
+          href: "posts/:id",
+          rel: ":id",
+          type: "GET",
+        },
+      ];
+
+      res.json({ posts, links });
+    }
   })
   .post((req, res, next) => {
     if (req.body.userId && req.body.title && req.body.content) {
