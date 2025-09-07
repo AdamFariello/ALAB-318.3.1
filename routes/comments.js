@@ -10,7 +10,16 @@ const error = require("../utilities/error")
 
 router.route("/")
       .get((req, res) => {
-        res.json({comments})
+        if (req.query.userId) {
+            let userComments = comments.filter(c => {
+                return c.userId == req.query.userId;
+            })
+            res.json({userComments})
+        } else if (req.query.postId) {
+
+        } else {
+            res.json({comments})
+        }
       })
       .post((req, res, next) => {
         //console.log(`test: ${req.body.userId} && ${req.body.postId} && ${req.body.body} ${req.body.skinwalker}`);
@@ -38,7 +47,7 @@ router.route("/")
       })
 
 router.route("/:id")
-      .get((req, res, next) => { 
+      .get((req, res, next) => {         
         const comment = comments.filter((e) => req.params.id == e.id)
         if (comment) res.json({comment});
         else next(error(404, "No comment with that id"))
