@@ -16,7 +16,10 @@ router.route("/")
             })
             res.json({userComments})
         } else if (req.query.postId) {
-
+            let userComments = comments.filter(c => {
+                return c.postId == req.query.postId;
+            })
+            res.json({userComments})
         } else {
             res.json({comments})
         }
