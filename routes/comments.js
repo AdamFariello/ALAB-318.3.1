@@ -37,5 +37,11 @@ router.route("/")
         }
       })
 
+router.route("/:id")
+      .get((req, res, next) => { 
+        const comment = comments.filter((e) => req.params.id == e.id)
+        if (comment) res.json({comment});
+        else next(error(404, "No comment with that id"))
+      })
 
 module.exports = router;
