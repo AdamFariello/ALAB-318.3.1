@@ -54,7 +54,9 @@ app.use("/api", function (req, res, next) {
 // Use our Routes
 app.use("/api/users", users);
 app.use("/api/posts", posts);
-app.use("/api/comments", comments);
+
+app.use("/comments", comments);
+//app.use("/api/comments", comments);
 
 // Adding some HATEOAS links.
 app.get("/", (req, res) => {
